@@ -9,7 +9,7 @@
     </provider>
 
     <!-- List Entities Here -->
-    <class></class>
+    <class>entity.Users</class>
     
     
 
