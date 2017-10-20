@@ -11,26 +11,27 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import entity.Activity;
 import entity.Destination;
 
-public class TestDestination {
+public class TestActivity {
 
 	EntityManagerFactory emf = null;
 	EntityManager em = null;
-	Destination des;
+	Activity act;
 
 	@Before
 	public void setUp() throws Exception {
 		emf = Persistence.createEntityManagerFactory("Travel");
 		em = emf.createEntityManager();
-		des = em.find(Destination.class, 1);
+		act = em.find(Activity.class, 1);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		em.close();
 		emf.close();
-		des = null;
+		act = null;
 	}
 
 	@Test
@@ -39,22 +40,26 @@ public class TestDestination {
 	}
 
 	@Test
-	public void test_Destination_name_mapped() {
-		assertEquals("Denver", des.getName());
+	public void test_Activity_name_mapped() {
+		assertEquals("concert", act.getName());
 	}
 	
 	@Test
-	public void test_Destination_imgUrl_mapped() {
-		assertNull(des.getImgUrl());
+	public void test_Activity_imgUrl_mapped() {
+		assertNull(act.getImgUrl());
 	}
 	
 	@Test
-	public void test_Destination_user_mapped() {
-		assertEquals("mustafa" ,des.getUser().getUserName());
+	public void test_Activity_date_mapped() {
+		assertEquals("2017-10-20", act.getDate().toString());
 	}
 	
-	public void test_Destination_activities_mapped() {
-		assertEquals(3, des.getActivities().size());
-		assertEquals("blade runner 2049", des.getActivities().get(2).getName());
+	@Test
+	public void test_Activity_cost_mapped() {
+		assertEquals(35.23, act.getCost(), .002);
+	}
+	
+	public void test_Activity_destination_mapped() {
+		assertEquals("Denver", act.getDestination().getName());
 	}
 }

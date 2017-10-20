@@ -10,20 +10,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import entity.Users;
+import entity.User;
 
 public class UserTest {
 
 
 	EntityManagerFactory emf = null;
 	EntityManager em = null;
-	Users u;
+	User u;
 
 	@Before
 	public void setUp() throws Exception {
 		emf = Persistence.createEntityManagerFactory("Travel");
 		em = emf.createEntityManager();
-		u = em.find(Users.class, 3);
+		u = em.find(User.class, 3);
 	}
 
 	@After
@@ -46,5 +46,11 @@ public class UserTest {
 	@Test
 	public void test_User_password_mapped() {
 		assertEquals("password3", u.getPassword());
+	}
+	
+	@Test
+	public void test_User_destinations_mapped() {
+		assertEquals(2, u.getDestinations().size());
+		assertEquals("Denver", u.getDestinations().get(0).getName());
 	}
 }

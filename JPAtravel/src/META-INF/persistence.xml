@@ -9,10 +9,9 @@
     </provider>
 
     <!-- List Entities Here -->
-    <class>entity.Users</class>
+    <class>entity.User</class>
     <class>entity.Destination</class>
-    
-    
+    <class>entity.Activity</class>
 
     <properties>
       <property name="javax.persistence.jdbc.url"

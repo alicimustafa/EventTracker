@@ -1,8 +1,7 @@
 package entity;
 
-import java.util.List;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,47 +9,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Destination {
+public class Activity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Temporal(TemporalType.DATE)
+	private Date date;
+
 	private String name;
+
+	private double cost;
 
 	@Column(name = "img_url")
 	private String imgUrl;
 
-	@JsonBackReference(value = "userDest")
+	@JsonBackReference(value="destActivities")
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+	@JoinColumn(name = "town_id")
+	private Destination destination;
 
-	
-	@JsonManagedReference(value = "destActivities")
-	@OneToMany(mappedBy = "destination", cascade = CascadeType.REMOVE)
-	private List<Activity> activities;
-
-	public User getUser() {
-		return user;
+	public Destination getDestination() {
+		return destination;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public List<Activity> getActivities() {
-		return activities;
-	}
-
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
+	public void setDestination(Destination destination) {
+		this.destination = destination;
 	}
 
 	public int getId() {
@@ -61,12 +52,28 @@ public class Destination {
 		this.id = id;
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
 	}
 
 	public String getImgUrl() {
