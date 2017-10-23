@@ -39,8 +39,8 @@ public class TravelControllers {
 		return dao.getUserList();
 	}
 	
-	@RequestMapping(path="users/{id}", method= RequestMethod.GET)
-	public User showUser(@PathVariable int id) {
+	@RequestMapping(path="users/{id}/destinations", method= RequestMethod.GET)
+	public User showUserDestinations(@PathVariable int id) {
 		return dao.getUserInfo(id);
 	}
 	
@@ -52,10 +52,20 @@ public class TravelControllers {
 	@RequestMapping(path="users/{id}", method = RequestMethod.DELETE)
 	public String userDestroy(@PathVariable int id) {
 		if(dao.deletUser(id)) {
-			return "succes";
+			return "true";
 		}
-		return "fail";
+		return "false";
 	}
 	
+	@RequestMapping(path = "users/{id}/destinations", method = RequestMethod.POST)
+	public User destinationCreate(@PathVariable int id, 
+			@RequestBody String json, HttpServletResponse res) {
+		boolean destationAdded = dao.addDestination(json, id);
+		if(destationAdded) {
+			return dao.getUserInfo(id);
+		}
+		res.setStatus(405);
+		return null;
+	}
 	
 }

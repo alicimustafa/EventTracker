@@ -91,9 +91,24 @@ public class TravelDAOImpl implements TravelDAO {
 	}
 
 	@Override
-	public User addDestination(String json, int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean addDestination(String json, int id) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Destination dest = mapper.readValue(json, Destination.class);
+			User user = em.find(User.class, id);
+			if(user != null) {
+				dest.setUser(user);
+				em.persist(dest);
+				return true;
+			}
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@Override

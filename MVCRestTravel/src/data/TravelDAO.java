@@ -13,7 +13,7 @@ public interface TravelDAO {
 	public boolean deletUser(int id);
 	
 	public User getUserInfo(int id);
-	public User addDestination(String json, int id);
+	public boolean addDestination(String json, int id);
 	public User removeDestination(int id);
 	public User updateDestination(String id);
 	
