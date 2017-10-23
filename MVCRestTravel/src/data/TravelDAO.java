@@ -8,7 +8,7 @@ import entity.User;
 
 public interface TravelDAO {
 	
-	public int checkUserLog(String json);
+	public User checkUserLog(String json);
 	
 	public List<User> getUserList();
 	public User getUserInfo(int id);

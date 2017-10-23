@@ -25,7 +25,7 @@ public class TravelDAOImpl implements TravelDAO {
 	EntityManager em;
 
 	@Override
-	public int checkUserLog(String json) {
+	public User checkUserLog(String json) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			User user = mapper.readValue(json, User.class);
@@ -38,7 +38,7 @@ public class TravelDAOImpl implements TravelDAO {
 				System.out.println("user name: " + userList.get(0).getUserName());
 				System.out.println("password: " + userList.get(0).getPassword());
 				if(userList.get(0).getPassword().equals(user.getPassword())) {
-					return userList.get(0).getId();
+					return userList.get(0);
 				}
 			}
 		} catch (JsonParseException e) {
@@ -48,7 +48,7 @@ public class TravelDAOImpl implements TravelDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return null;
 	}
 	
 	@Override

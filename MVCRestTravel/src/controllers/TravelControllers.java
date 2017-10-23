@@ -28,12 +28,13 @@ public class TravelControllers {
 	}
 	
 	@RequestMapping(path="login", method = RequestMethod.POST)
-	public String logUser(@RequestBody String json , HttpServletResponse res) {
-		Integer userId = dao.checkUserLog(json);
-		if(userId == 0) {
-			res.setStatus(401);
+	public User logUser(@RequestBody String json , HttpServletResponse res) {
+		User user = dao.checkUserLog(json);
+		if(user != null) {
+			return user;
 		}
-		return userId.toString();
+		res.setStatus(401);
+		return null;
 	}
 	
 	@RequestMapping(path="users", method= RequestMethod.GET)
