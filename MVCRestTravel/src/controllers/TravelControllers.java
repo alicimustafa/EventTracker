@@ -25,18 +25,23 @@ public class TravelControllers {
 		return "pong";
 	}
 	
+	@RequestMapping(path="login", method = RequestMethod.POST)
+	public String logUser(@RequestBody String json , HttpServletResponse res) {
+		Integer userId = dao.checkUserLog(json);
+		if(userId == 0) {
+			res.setStatus(401);
+		}
+		return userId.toString();
+	}
+	
 	@RequestMapping(path="users", method= RequestMethod.GET)
 	public List<User> usersIndex() {
 		return dao.getUserList();
 	}
 	
-	@RequestMapping(path="login", method = RequestMethod.POST)
-	public User logUser(@RequestBody String json , HttpServletResponse res) {
-		User user = dao.checkUserLog(json);
-		if(user == null) {
-			res.setStatus(401);
-		}
-		return user;
+	@RequestMapping(path="users/{id}", method= RequestMethod.GET)
+	public User showUser(@PathVariable int id) {
+		return dao.getUserInfo(id);
 	}
 	
 	@RequestMapping(path="users", method= RequestMethod.POST)

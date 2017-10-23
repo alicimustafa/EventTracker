@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import entity.Destination;
 import entity.User;
 
 @Transactional
@@ -38,13 +39,10 @@ public class TravelDAOImpl implements TravelDAO {
 			em.flush();
 			return user;
 		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -61,7 +59,7 @@ public class TravelDAOImpl implements TravelDAO {
 	}
 
 	@Override
-	public User checkUserLog(String json) {
+	public int checkUserLog(String json) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			User user = mapper.readValue(json, User.class);
@@ -74,19 +72,57 @@ public class TravelDAOImpl implements TravelDAO {
 				System.out.println("user name: " + userList.get(0).getUserName());
 				System.out.println("password: " + userList.get(0).getPassword());
 				if(userList.get(0).getPassword().equals(user.getPassword())) {
-					return userList.get(0);
+					return userList.get(0).getId();
 				}
 			}
 		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return 0;
+	}
+
+	@Override
+	public User getUserInfo(int id) {		
+		return em.find(User.class, id);
+	}
+
+	@Override
+	public User addDestination(String json, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User removeDestination(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User updateDestination(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Destination getDestinationForUser(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Destination addActivity(String json, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Destination removeActivity(int id) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
