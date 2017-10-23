@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import data.TravelDAO;
+import entity.Destination;
 import entity.User;
 
 @RestController
@@ -39,8 +40,8 @@ public class TravelControllers {
 		return dao.getUserList();
 	}
 	
-	@RequestMapping(path="users/{id}/destinations", method= RequestMethod.GET)
-	public User showUserDestinations(@PathVariable int id) {
+	@RequestMapping(path="users/{id}", method= RequestMethod.GET)
+	public User showUser(@PathVariable int id) {
 		return dao.getUserInfo(id);
 	}
 	
@@ -57,6 +58,12 @@ public class TravelControllers {
 		return "false";
 	}
 	
+	@RequestMapping(path="users/{id}", method = RequestMethod.PUT)
+	public User userUpdat(@PathVariable int id, 
+			@RequestBody String json) {
+		return dao.updateUser(json, id);
+	}
+	
 	@RequestMapping(path = "users/{id}/destinations", method = RequestMethod.POST)
 	public User destinationCreate(@PathVariable int id, 
 			@RequestBody String json, HttpServletResponse res) {
@@ -66,6 +73,19 @@ public class TravelControllers {
 		}
 		res.setStatus(405);
 		return null;
+	}
+	
+	@RequestMapping(path = "users/{userId}/destinations/{id}", 
+			method = RequestMethod.DELETE)
+	public User destinationDestroy(@PathVariable int id) {
+		int userId = dao.removeDestination(id);
+		return dao.getUserInfo(userId);
+	}
+	
+	@RequestMapping(path = "users/{userId}/destinations/{id}", 
+			method = RequestMethod.GET)
+	public Destination showDestination(@PathVariable int id) {
+		return dao.getDestinationForUser(id);
 	}
 	
 }

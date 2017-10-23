@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -28,7 +27,6 @@ public class Destination {
 	@Column(name = "img_url")
 	private String imgUrl;
 
-	@JsonBackReference(value = "userDest")
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

@@ -24,6 +24,33 @@ public class TravelDAOImpl implements TravelDAO {
 	EntityManager em;
 
 	@Override
+	public int checkUserLog(String json) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			User user = mapper.readValue(json, User.class);
+			String sql = "SELECT u FROM User u WHERE u.userName = :name";
+			List<User> userList = em.createQuery(sql, User.class)
+					.setParameter("name", user.getUserName())
+					.getResultList();
+			System.out.println(userList);
+			if(userList.size() > 0) {
+				System.out.println("user name: " + userList.get(0).getUserName());
+				System.out.println("password: " + userList.get(0).getPassword());
+				if(userList.get(0).getPassword().equals(user.getPassword())) {
+					return userList.get(0).getId();
+				}
+			}
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	@Override
 	public List<User> getUserList() {
 		String sql = "SELECT u FROM User u";
 		return em.createQuery(sql, User.class).getResultList();
@@ -58,23 +85,21 @@ public class TravelDAOImpl implements TravelDAO {
 		return false;
 	}
 
+
 	@Override
-	public int checkUserLog(String json) {
+	public User getUserInfo(int id) {		
+		return em.find(User.class, id);
+	}
+	
+	@Override
+	public User updateUser(String json, int id) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			User user = mapper.readValue(json, User.class);
-			String sql = "SELECT u FROM User u WHERE u.userName = :name";
-			List<User> userList = em.createQuery(sql, User.class)
-					.setParameter("name", user.getUserName())
-					.getResultList();
-			System.out.println(userList);
-			if(userList.size() > 0) {
-				System.out.println("user name: " + userList.get(0).getUserName());
-				System.out.println("password: " + userList.get(0).getPassword());
-				if(userList.get(0).getPassword().equals(user.getPassword())) {
-					return userList.get(0).getId();
-				}
-			}
+			User inputUser = mapper.readValue(json, User.class);
+			User user = em.find(User.class, id);
+			user.setUserName(inputUser.getUserName());
+			user.setPassword(inputUser.getPassword());
+			return user;
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -82,12 +107,7 @@ public class TravelDAOImpl implements TravelDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return 0;
-	}
-
-	@Override
-	public User getUserInfo(int id) {		
-		return em.find(User.class, id);
+		return null;
 	}
 
 	@Override
@@ -112,21 +132,22 @@ public class TravelDAOImpl implements TravelDAO {
 	}
 
 	@Override
-	public User removeDestination(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int removeDestination(int id) {
+		Destination dest = em.find(Destination.class, id);
+		int userId = dest.getUser().getId();
+		em.remove(dest);
+		return userId;
 	}
 
 	@Override
-	public User updateDestination(String id) {
+	public Destination updateDestination(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Destination getDestinationForUser(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Destination.class, id);
 	}
 
 	@Override
