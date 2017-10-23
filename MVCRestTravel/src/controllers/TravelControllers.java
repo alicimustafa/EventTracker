@@ -104,9 +104,10 @@ public class TravelControllers {
 	
 	@RequestMapping(path = "users/{userId}/destinations/{id}",
 			method = RequestMethod.PUT)
-	public Destination updateDestination(@PathVariable int id,
+	public List<Destination> updateDestination(@PathVariable int id,
 			@RequestBody String json) {
-		return dao.updateDestination(json, id);
+		int userId = dao.updateDestination(json, id).getUser().getId();
+		return dao.destinatonListForUsers(userId);
 	}
 	
 	@RequestMapping(path = "users/{userId}/destinations/{id}/activities",

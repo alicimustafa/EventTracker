@@ -2,7 +2,9 @@ $(document).ready(function(){
   console.log("loaded");
   $(loggForm.submit).click(loggingHandler);
   $(addDestination.submit).click(handleCreate);
+  $(editDestination.submit).click(handleUpdate);
   $("#add-dest").hide();
+  $("#edit-dest").hide();
 });
 
 var loggingHandler = function(ev){
@@ -102,7 +104,39 @@ var figureCost = function(activities){
 }
 var handleDestView = function(ev){
   var destId = $(this).attr("data-id");
-  console.log(destId);
+  var userId = $(loggForm.id).val();
+  $.ajax({
+    url: "rest/users/"+ userId +"/destinations/"+destId,
+    type: "GET",
+    dataType: 'json',
+  }).done(function(data){
+    $(editDestination.id).val(data.id);
+    $(editDestination.name).val(data.name);
+    $(editDestination.imgUrl).val(data.imgUrl);
+    $("#edit-dest").show();
+  });
+}
+
+var handleUpdate = function(ev){
+  ev.preventDefault();
+  var name = $(editDestination.name).val();
+  var image = $(editDestination.imgUrl).val();
+  var destId = $(editDestination.id).val();
+  var dest = {
+        "name": name,
+        "imgUrl": image
+  }
+  var userId = $(loggForm.id).val();
+  $.ajax({
+    url: "rest/users/" + userId + "/destinations/" + destId,
+    type: "PUT",
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify(dest)
+  }).done(function(data){
+    $("#dest-table").html("").append(createDestinationTable(data));
+    $("#edit-dest").hide();
+  });
 }
 
 var handleDestDel = function(ev) {
@@ -135,5 +169,4 @@ var handleCreate = function(ev){
   }).done(function(data){
     $("#dest-table").html("").append(createDestinationTable(data));
   });
-  console.log("create");
 }
