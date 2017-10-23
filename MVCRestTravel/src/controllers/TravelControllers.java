@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import data.TravelDAO;
+import entity.Activity;
 import entity.Destination;
 import entity.User;
 
@@ -78,7 +79,7 @@ public class TravelControllers {
 		if(destationAdded) {
 			return dao.destinatonListForUsers(id);
 		}
-		res.setStatus(405);
+		res.setStatus(400);
 		return null;
 	}
 	
@@ -90,7 +91,7 @@ public class TravelControllers {
 		if(userId > 0){
 			return dao.destinatonListForUsers(userId); 
 		}
-		res.setStatus(405);
+		res.setStatus(400);
 		return null;
 	}
 	
@@ -107,4 +108,55 @@ public class TravelControllers {
 		return dao.updateDestination(json, id);
 	}
 	
+	@RequestMapping(path = "users/{userId}/destinations/{id}/activities",
+			method = RequestMethod.GET)
+	public List<Activity> indexActivity(@PathVariable int id){
+		return dao.activitiesForDestination(id);
+	}
+	
+	@RequestMapping(
+			path = "users/{user}/destinations/{dest}/activities/{id}",
+			method = RequestMethod.GET)
+	public Activity showActivity(@PathVariable int id) {
+		return dao.getActivityById(id);
+	}
+	
+	@RequestMapping(
+			path = "users/{user}/destinations/{id}/activities",
+			method = RequestMethod.POST)
+	public List<Activity> createActivity(@RequestBody String json,
+			@PathVariable int id, HttpServletResponse res){
+		if(dao.addActivity(json, id)) {
+			return dao.activitiesForDestination(id);
+		}
+		res.setStatus(400);
+		return null;
+	}
+	
+	@RequestMapping(
+			path = "users/{user}/destinations/{dest}/activities/{id}",
+			method = RequestMethod.DELETE)
+	public List<Activity> destroyActivity(@PathVariable int id,
+			HttpServletResponse res){
+		int destId = dao.removeActivity(id);
+		if(destId > 0) {
+			return dao.activitiesForDestination(destId);
+		}
+		res.setStatus(400);
+		return null;
+	}
+	
+	@RequestMapping(
+			path = "users/{user}/destinations/{dest}/activities/{id}",
+			method = RequestMethod.PUT)
+	public Activity updateActivity(@PathVariable int id,
+			@RequestBody String json,
+			HttpServletResponse res) {
+		Activity act = dao.upadateActivity(json, id);
+		if(act != null) {
+			return act;
+		}
+		res.setStatus(400);
+		return null;
+	}
 }

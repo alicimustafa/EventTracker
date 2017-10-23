@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import entity.Activity;
 import entity.Destination;
 import entity.User;
 
@@ -175,14 +176,67 @@ public class TravelDAOImpl implements TravelDAO {
 	}
 
 	@Override
-	public Destination addActivity(String json, int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Activity> activitiesForDestination(int id) {
+		String sql = "SELECT a FROM Activity a WHERE a.destination.id = :id";
+		return em.createQuery(sql, Activity.class)
+				.setParameter("id", id)
+				.getResultList();
 	}
 
 	@Override
-	public Destination removeActivity(int id) {
-		// TODO Auto-generated method stub
+	public Activity getActivityById(int id) {
+		return em.find(Activity.class, id);
+	}
+
+	@Override
+	public int removeActivity(int id) {
+		Activity act = em.find(Activity.class, id);
+		if(act != null) {
+			int destId = act.getDestination().getId();
+			em.remove(act);
+			return destId;
+		}
+		return 0;
+	}
+
+	@Override
+	public boolean addActivity(String json, int id) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Activity act = mapper.readValue(json, Activity.class);
+			Destination dest = em.find(Destination.class, id);
+			act.setDestination(dest);
+			em.persist(act);
+			return true;
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public Activity upadateActivity(String json, int id) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Activity actInfo = mapper.readValue(json, Activity.class);
+			Activity act = em.find(Activity.class, id);
+			if(act != null) {
+				act.setName(actInfo.getName());
+				act.setDate(actInfo.getDate());
+				act.setCost(actInfo.getCost());
+				return act;
+			}
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

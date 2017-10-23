@@ -2,6 +2,7 @@ package data;
 
 import java.util.List;
 
+import entity.Activity;
 import entity.Destination;
 import entity.User;
 
@@ -21,8 +22,9 @@ public interface TravelDAO {
 	public boolean addDestination(String json, int id);
 	public Destination updateDestination(String json, int id);
 	
-	public Destination addActivity(String json, int id);
-	public Destination removeActivity(int id);
-	
-	
+	public List<Activity> activitiesForDestination(int id);
+	public Activity getActivityById(int id);
+	public int removeActivity(int id);
+	public boolean addActivity(String json, int id);
+	public Activity upadateActivity(String json, int id);
 }
