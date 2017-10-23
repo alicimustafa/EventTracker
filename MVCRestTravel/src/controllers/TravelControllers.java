@@ -64,12 +64,19 @@ public class TravelControllers {
 		return dao.updateUser(json, id);
 	}
 	
-	@RequestMapping(path = "users/{id}/destinations", method = RequestMethod.POST)
-	public User destinationCreate(@PathVariable int id, 
+	@RequestMapping(path="users/{id}/destinations", 
+			method = RequestMethod.GET)
+	public List<Destination> indexDestination(@PathVariable int id){
+		return dao.destinatonListForUsers(id);
+	}
+	
+	@RequestMapping(path = "users/{id}/destinations", 
+			method = RequestMethod.POST)
+	public List<Destination> destinationCreate(@PathVariable int id, 
 			@RequestBody String json, HttpServletResponse res) {
 		boolean destationAdded = dao.addDestination(json, id);
 		if(destationAdded) {
-			return dao.getUserInfo(id);
+			return dao.destinatonListForUsers(id);
 		}
 		res.setStatus(405);
 		return null;
@@ -77,15 +84,27 @@ public class TravelControllers {
 	
 	@RequestMapping(path = "users/{userId}/destinations/{id}", 
 			method = RequestMethod.DELETE)
-	public User destinationDestroy(@PathVariable int id) {
+	public List<Destination> destinationDestroy(@PathVariable int id,
+			HttpServletResponse res) {
 		int userId = dao.removeDestination(id);
-		return dao.getUserInfo(userId);
+		if(userId > 0){
+			return dao.destinatonListForUsers(userId); 
+		}
+		res.setStatus(405);
+		return null;
 	}
 	
 	@RequestMapping(path = "users/{userId}/destinations/{id}", 
 			method = RequestMethod.GET)
 	public Destination showDestination(@PathVariable int id) {
 		return dao.getDestinationForUser(id);
+	}
+	
+	@RequestMapping(path = "users/{userId}/destinations/{id}",
+			method = RequestMethod.PUT)
+	public Destination updateDestination(@PathVariable int id,
+			@RequestBody String json) {
+		return dao.updateDestination(json, id);
 	}
 	
 }

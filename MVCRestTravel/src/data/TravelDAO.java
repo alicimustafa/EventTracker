@@ -15,11 +15,12 @@ public interface TravelDAO {
 	public boolean deletUser(int id);
 	public User updateUser(String json, int id);
 	
+	public List<Destination> destinatonListForUsers(int id);
 	public int removeDestination(int id);
-	
 	public Destination getDestinationForUser(int id);
 	public boolean addDestination(String json, int id);
-	public Destination updateDestination(String id);
+	public Destination updateDestination(String json, int id);
+	
 	public Destination addActivity(String json, int id);
 	public Destination removeActivity(int id);
 	

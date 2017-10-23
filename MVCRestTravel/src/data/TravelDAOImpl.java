@@ -111,6 +111,14 @@ public class TravelDAOImpl implements TravelDAO {
 	}
 
 	@Override
+	public List<Destination> destinatonListForUsers(int id){
+		String sql = "SELECT d FROM Destination d WHERE d.user.id = :id";
+		return em.createQuery(sql, Destination.class)
+				.setParameter("id", id)
+				.getResultList();
+	}
+	
+	@Override
 	public boolean addDestination(String json, int id) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -134,14 +142,30 @@ public class TravelDAOImpl implements TravelDAO {
 	@Override
 	public int removeDestination(int id) {
 		Destination dest = em.find(Destination.class, id);
-		int userId = dest.getUser().getId();
-		em.remove(dest);
-		return userId;
+		if(dest != null) {
+			int userId = dest.getUser().getId();
+			em.remove(dest);
+			return userId;
+		}
+		return 0;
 	}
 
 	@Override
-	public Destination updateDestination(String id) {
-		// TODO Auto-generated method stub
+	public Destination updateDestination(String json, int id) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Destination destInfo = mapper.readValue(json, Destination.class);
+			Destination dest = em.find(Destination.class, id);
+			dest.setName(destInfo.getName());
+			dest.setImgUrl(destInfo.getImgUrl());
+			return dest;
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
