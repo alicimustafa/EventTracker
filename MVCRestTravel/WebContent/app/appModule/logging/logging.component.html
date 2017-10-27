@@ -1,7 +1,18 @@
-<form>
-	<div>
-		<p>User name: <input type="text" ng-model="log.user"></p>
-		<p>Password: <input type="text" ng-model='log.password'></p>
+<form ng-hide='vm.createAccount'>
+	<p>Logg in</p>
+	<div ng-hide='vm.loggedIn'>
+		<p class = 'error'>{{vm.errorMessage}}</p>
+		<p>User Name: <input type='text' ng-model='log.userName'></p>
+		<p>Password: <input type='text' ng-model='log.password'></p>
 	</div>
-	<input type="submit" ng-model='vm.loggingVal'>
+	<input type='submit' value='{{vm.loggingVal}}' ng-click='vm.checkLogging(log)'>
+	<button ng-hide='vm.loggedIn' type='button' ng-click='vm.createFormShow()'>new Account</button>
+</form>
+
+<form ng-show='vm.createAccount'>
+	<p>New Account</p>
+	<p>User Name: <input type='text' ng-model='acc.userName'></p>
+	<p>Password: <input type='text' ng-model='acc.password'></p>
+	<input type='submit' value='Create' ng-click='vm.createAcc(acc)'>
+	<button type='button' ng-click='vm.cancelAcc()'>Cancel</button>
 </form>

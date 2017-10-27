@@ -2,14 +2,25 @@ angular.module('appModule')
 .factory('loggingService', function($http){
 	var service = {};
 	
-	service.checkLogin = function(logg){
+	service.checkLogin = function(log){
 		return $http({
 		      method : 'POST',
-		      url : 'api/user/1/todo/',
+		      url : 'rest/login',
 		      headers : {
 		          'Content-Type' : 'application/json'
 		        },
-		      data : todo
+		      data : log
+		    });
+	}
+	
+	service.create = function(account){
+		return $http({
+		      method : 'POST',
+		      url : 'rest/users',
+		      headers : {
+		          'Content-Type' : 'application/json'
+		        },
+		      data : account
 		    });
 	}
 	return service;
