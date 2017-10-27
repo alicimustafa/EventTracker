@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Travel</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+</head>
+<body>
+	<div id="wrap">
+		<h1>My Travel Expense Tracker</h1>
+		<div id="logging">
+			<div id="logg-err"></div>
+			<form name="loggForm">
+				<div class="" id="notLogged">
+					<input type="hidden" name="id" value="">
+					User name:
+					<input type="text" name="userName"><br>
+					Password:
+					<input type="text" name="password"><br>
+				</div>
+				<input type="submit" name="submit" value="Logg in">
+			</form>
+		</div>
+		<div id="main-display">
+			<h3 id="user-name"></h3>
+			<div id="dest-table">
+
+			</div>
+			<div id="add-dest">
+				<h4>Add a new destination</h4>
+				<form name="addDestination">
+					name:
+					<input type="text" name="name"><br>
+					image url:
+					<input type="text" name="imgUrl"><br>
+					<input type="submit" name="submit" value="create">
+				</form>
+			</div>
+			<div id="edit-dest">
+				<h4>Edit destination</h4>
+				<form name="editDestination">
+					<input type="hidden" name="id" value="">
+					name:
+					<input type="text" name="name" value=""><br>
+					image url:
+					<input type="text" name="imgUrl" value=""><br>
+					<input type="submit" name="submit" value="Edit">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
