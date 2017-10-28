@@ -1,7 +1,7 @@
 angular.module('appModule')
 .component('logging',{
 	templateUrl:'app/appModule/logging/logging.component.html',
-	controller: function(loggingService){
+	controller: function(loggingService, $location){
 		
 		var vm = this;
 		
@@ -17,6 +17,7 @@ angular.module('appModule')
 					vm.loggedIn = true;
 					vm.loggingVal = 'Logg off';
 					vm.errorMessage = "";
+					$location.path('users/'+res.data.id + '/destinations/');
 				})
 				.catch(function(err){
 					console.log(err);

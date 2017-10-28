@@ -17,10 +17,10 @@ angular.module('appModule')
 		    });
 	};
 	
-	service.destroy = function(){
+	service.destroy = function(userId,destId){
 		return $http({
 		      method : 'DELETE',
-		      url : 'rest/users/'+ userId +'/destinations' + destId
+		      url : 'rest/users/'+ userId +'/destinations/' + destId
 		    });
 	};
 	
@@ -35,10 +35,10 @@ angular.module('appModule')
 		    });
 	};
 	
-	service.update = function(userId, destination){
+	service.update = function(userId, destId, destination){
 		return $http({
-		      method : 'POST',
-		      url : 'rest/users/'+ userId +'/destinations' + destination.id,
+		      method : 'PUT',
+		      url : 'rest/users/'+ userId +'/destinations/' + destId,
 		      headers : {
 		          'Content-Type' : 'application/json'
 		        },

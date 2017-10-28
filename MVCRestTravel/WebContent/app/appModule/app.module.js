@@ -5,5 +5,8 @@ angular.module('appModule',['ngRoute'])
 	.when('/',{
 		template:'<home><home>'
 	})
+	.when('/users/:userId/destinations/',{
+		template:'<destinations></destinations>'
+	})
 	
 });

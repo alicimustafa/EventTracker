@@ -1,0 +1,53 @@
+<div ng-hide='vm.selected'>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th colspan='3'>Destination</th>
+				<th>Cost</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="dest in vm.destList">
+				<td><img alt="pic" ng-src="{{dest.imgUrl}}"></td>
+				<td colspan='3'>{{dest.name}}</td>
+				<td>{{dest.cost | currency}}</td>
+				<td><button type="button" ng-click="vm.deleteDest(dest)">Delete</button></td>
+				<td><button type="button" ng-click="vm.showView(dest)">View</button></td>
+			</tr>
+			<tr>
+				<td colspan='4'>Total</td>
+				<td>{{vm.getTotal() | currency}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+	Create new destination
+		<form>
+			Name: <input type="text" ng-model="dest.name"><br>
+			Image: <input type="text" ng-model="dest.imgUrl"><br>
+			<input type="submit" ng-click="vm.createDest(dest)" value="Create">
+		</form>
+	</div>
+</div>
+
+<div ng-show="vm.selected">
+	<div ng-hide="vm.edit">
+		{{vm.selected.name}} cost {{vm.selected.cost | currency}}<br>
+		<img alt="pic" ng-src="{{vm.selected.imgUrl}}"><br>
+		<a href="{{'#/users/' + vm.userId + '/destinations/' + vm.selected.id}}">Goto activity list</a><br>
+		<button type="button" ng-click="vm.showEdit()">Edit</button>
+		<button type="button" ng-click="vm.showTable()">Goto Table</button>
+	</div>
+	<div ng-show="vm.edit">
+		<form>
+			Name: <input type="text" ng-model="vm.selected.name"><br>
+			Image Url: <input type="text" ng-model="vm.selected.imgUrl"><br>
+			<input type="submit" ng-click="vm.updateDest()" value="Update">
+			<button type="button" ng-click="vm.cancelEdit()">Cancel</button>
+		</form>
+	</div>
+</div>
+
