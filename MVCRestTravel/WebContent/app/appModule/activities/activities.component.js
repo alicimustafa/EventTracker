@@ -10,21 +10,41 @@ angular.module('appModule')
 		
 		vm.activities = [];
 		vm.selected = null;
+		vm.edit = false;
 		load();
 		
-		vm.showEdit = function(activity){
-			console.log(activity);
+		vm.showView = function(activity){
+			vm.selected = activity;
+		}
+		
+		vm.showTable = function(){
+			vm.selected = null;
+		}
+		
+		vm.showEdit = function(){
+			vm.edit = true;
 		};
+		
+		vm.cancelEdit = function(){
+			vm.edit = false;
+		}
 		
 		vm.deleteActivity = function(activity){
 			console.log(activity);
+			activityService.destroy(vm.userId, vm.destId, activity.id)
+			.then(function(res){
+				load();
+			})
+			.catch(function(err){
+				console.log(err);
+			});
 		}
 		
-		vm.edit = function(activity){
-			activityService.update(vm.userId, vm.destId, activity)
+		vm.update = function(){
+			activityService.update(vm.userId, vm.destId, vm.selected)
 			.then(function(res){
-				console.log(res);
 				load();
+				vm.edit = false;
 			})
 			.catch(function(err){
 				console.log(err);
@@ -32,7 +52,6 @@ angular.module('appModule')
 		};
 		
 		vm.create = function(activity){
-			console.log(activity);
 			activityService.create(vm.userId, vm.destId, activity)
 			.then(function(res){
 				console.log(res);

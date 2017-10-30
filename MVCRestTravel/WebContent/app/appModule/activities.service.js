@@ -19,7 +19,7 @@ angular.module('appModule')
 		    });
 	};
 	
-	service.destroy = function(userId, destId, activId){
+	service.destroy = function(userId, destId, activeId){
 		return $http({
 		      method : 'DELETE',
 		      url : 'rest/users/'+ userId 
@@ -39,11 +39,11 @@ angular.module('appModule')
 		    });
 	};
 	
-	service.update = function(userId, destId, activId, destination){
+	service.update = function(userId, destId, destination){
 		return $http({
 		      method : 'PUT',
 		      url : 'rest/users/' + userId 
-		      + '/destinations/' + destId + '/activities/' + activId,
+		      + '/destinations/' + destId + '/activities/' + destination.id,
 		      headers : {
 		          'Content-Type' : 'application/json'
 		        },

@@ -17,7 +17,7 @@
 				<th>{{activity.cost | currency}}</th>
 				<th>{{activity.date}}</th>
 				<th><button ng-click="vm.deleteActivity(activity)">Delete</button></th>
-				<th><button ng-click="vm.showEdit(activity)">View</button></th>
+				<th><button ng-click="vm.showView(activity)">View</button></th>
 			</tr>
 		</tbody>
 	</table>
@@ -31,5 +31,21 @@
 	</form>
 </div>
 <div ng-show="vm.selected">
-
+	<div ng-hide="vm.edit">
+		Name:{{vm.selected.name}}     Cost: {{vm.selected.cost}} <br>  
+		<img alt="pic" ng-src="{{activity.imgUrl}}"><br>
+		Date: {{vm.selected.date}} <br>
+		<button type="button" ng-click="vm.showEdit()">Edit</button>
+		<button type="button" ng-click="vm.showTable()">Show Table</button>
+	</div>
+	<div ng-show="vm.edit">
+		<form>
+			Name: <input type="text" ng-model="vm.selected.name"><br>
+			Date: <input type="text" ng-model="vm.selected.date"><br>
+			Image: <input type="text" ng-model="vm.selected.imgUrl"><br>
+			Cost: <input type="text" ng-model="vm.selected.cost"><br>
+			<button type="button" ng-click="vm.cancelEdit()">Cancel</button>
+			<input type="submit" ng-click="vm.update()" value="Update">
+		</form>
+	</div>
 </div>

@@ -26,6 +26,7 @@ angular.module('appModule')
 			} else {
 				vm.loggedIn = false;
 				vm.loggingVal = 'Logg in';
+				$location.path('/');
 			}
 		}
 		
