@@ -8,5 +8,8 @@ angular.module('appModule',['ngRoute'])
 	.when('/users/:userId/destinations/',{
 		template:'<destinations></destinations>'
 	})
-	
+	.when('/users/:userId/destinations/:destId/activities',{
+		template:'<activities></activities>'
+	})
+
 });

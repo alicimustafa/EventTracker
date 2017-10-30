@@ -37,7 +37,7 @@
 	<div ng-hide="vm.edit">
 		{{vm.selected.name}} cost {{vm.selected.cost | currency}}<br>
 		<img alt="pic" ng-src="{{vm.selected.imgUrl}}"><br>
-		<a href="{{'#/users/' + vm.userId + '/destinations/' + vm.selected.id}}">Goto activity list</a><br>
+		<a href="{{'#/users/' + vm.userId + '/destinations/' + vm.selected.id + '/activities'}}">Goto activity list</a><br>
 		<button type="button" ng-click="vm.showEdit()">Edit</button>
 		<button type="button" ng-click="vm.showTable()">Goto Table</button>
 	</div>
