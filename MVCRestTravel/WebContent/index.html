@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Travel</title>
+<link rel="stylesheet" href="css/app.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.min.js"></script>
@@ -16,7 +17,10 @@
 <script src="app/appModule/activities/activities.component.js"></script>
 </head>
 <body>
-	<logging></logging>
-	<ng-view></ng-view>
+	<div id="wrap">
+		<logging></logging>
+		<ng-view></ng-view>
+	</div>
+	
 </body>
 </html>
