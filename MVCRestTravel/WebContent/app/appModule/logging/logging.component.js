@@ -24,9 +24,15 @@ angular.module('appModule')
 					vm.errorMessage = "Your Information is incorrect";
 				});
 			} else {
-				vm.loggedIn = false;
-				vm.loggingVal = 'Logg in';
-				$location.path('/');
+				loggingService.logout()
+				.then(function(res){
+					vm.loggedIn = false;
+					vm.loggingVal = 'Logg in';
+					$location.path('/');
+				})
+				.catch(function(err){
+					console.log(err);
+				});
 			}
 		}
 		
@@ -45,7 +51,7 @@ angular.module('appModule')
 				vm.createAccount = false;
 			})
 			.catch(function(err){
-				vm.errorMessage = "Ther was a problem creating Account";
+				vm.errorMessage = "There was a problem creating Account";
 				vm.createAccount = false;
 			});
 		}

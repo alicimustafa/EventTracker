@@ -5,7 +5,7 @@ angular.module('appModule')
 	service.checkLogin = function(log){
 		return $http({
 		      method : 'POST',
-		      url : 'rest/login',
+		      url : 'rest/auth/login',
 		      headers : {
 		          'Content-Type' : 'application/json'
 		        },
@@ -13,10 +13,20 @@ angular.module('appModule')
 		    });
 	}
 	
+	service.logout = function(){
+		return $http({
+			method : 'POST',
+			url : 'rest/auth/logout',
+			header : {
+				'Content-Type' : 'application/json'
+			}
+		});
+	}
+	
 	service.create = function(account){
 		return $http({
 		      method : 'POST',
-		      url : 'rest/users',
+		      url : 'rest/auth/register',
 		      headers : {
 		          'Content-Type' : 'application/json'
 		        },

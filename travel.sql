@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `users` ;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC))
 ENGINE = InnoDB;

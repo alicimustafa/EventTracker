@@ -25,33 +25,6 @@ public class TravelDAOImpl implements TravelDAO {
 	EntityManager em;
 
 	@Override
-	public User checkUserLog(String json) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			User user = mapper.readValue(json, User.class);
-			String sql = "SELECT u FROM User u WHERE u.userName = :name";
-			List<User> userList = em.createQuery(sql, User.class)
-					.setParameter("name", user.getUserName())
-					.getResultList();
-			System.out.println(userList);
-			if(userList.size() > 0) {
-				System.out.println("user name: " + userList.get(0).getUserName());
-				System.out.println("password: " + userList.get(0).getPassword());
-				if(userList.get(0).getPassword().equals(user.getPassword())) {
-					return userList.get(0);
-				}
-			}
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
 	public List<User> getUserList() {
 		String sql = "SELECT u FROM User u";
 		return em.createQuery(sql, User.class).getResultList();

@@ -27,16 +27,6 @@ public class TravelControllers {
 		return "pong";
 	}
 	
-	@RequestMapping(path="login", method = RequestMethod.POST)
-	public User logUser(@RequestBody String json , HttpServletResponse res) {
-		User user = dao.checkUserLog(json);
-		if(user != null) {
-			return user;
-		}
-		res.setStatus(401);
-		return null;
-	}
-	
 	@RequestMapping(path="users", method= RequestMethod.GET)
 	public List<User> usersIndex() {
 		return dao.getUserList();
